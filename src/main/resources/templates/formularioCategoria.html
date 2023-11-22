@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout :: head">
+	<meta charset="utf-8">
+</head>
+
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<br>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-6 col-md-8 col-sm-10">
+				<div class="card">
+					<h2 class="card-header text-center fs-4" th:text="${titulo}"></h2>
+					<div class="card-body">
+						<form th:action="@{/registro-categoria}" th:object="${categoria}" method="post">
+							<input type="hidden" th:if="${categoria != null}" th:field="*{id}" th:value="${categoria.id}"/>
+							<div th:if="${error}" class="alert alert-danger" role="alert" style="padding: 10px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">
+							    <p th:text="${error}" style="margin-bottom: 0;"></p>
+							</div>
+
+							<div class="mb-3">
+								<label for="nombre" class="form-label">Nombre :</label>						
+								<input type="text" id="nombre" th:field="*{nombre}" class="form-control" th:errorclass="'is-invalid'" required />
+								<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+							</div>
+							<div class="mb-3">
+								<label for="descripcion" class="form-label">Descripción :</label>
+								<textarea id="descripcion" th:field="*{descripcion}" class="form-control" th:errorclass="'is-invalid'" rows="2"></textarea>
+								<small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small>
+							</div>
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary btn-sm">
+                                	<i class="fas fa-save me-2"></i> Guardar
+                            	</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

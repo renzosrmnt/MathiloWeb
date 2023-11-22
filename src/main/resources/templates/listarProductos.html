@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="layout/layout :: head">
+    <title>Gestión de productos</title>
+</head>
+
+<body>
+
+    <header th:replace="layout/layout :: header"></header>
+
+    <div class=" container py-4 ml-5 mr-5">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a th:href="@{/nuevo-producto}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Agregar producto</a>
+                </h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Peso</th>
+                            <th>Altura</th>
+                            <th>Ancho</th>
+                            <th>Largo</th>
+                            <th>Material</th>
+                            <th>Color</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Categoría</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="producto : ${productos}">
+                            <td th:text="${producto.id}"></td>
+                            <td th:text="${producto.nombre}"></td>
+                            <td th:text="${producto.descripcion}"></td>
+                            <td th:text="${producto.peso}"></td>
+                            <td th:text="${producto.altura}"></td>
+                            <td th:text="${producto.ancho}"></td>
+                            <td th:text="${producto.largo}"></td>
+                            <td th:text="${producto.material}"></td>
+                            <td th:text="${producto.color}"></td>
+                            <td th:text="${producto.precio}"></td>
+                            <td th:text="${producto.stock}"></td>
+                            <td th:text="${producto.categoria.nombre}"></td>
+                            <td><a class="btn btn-info btn-sm" th:href="@{/producto/} + ${producto.id}"><i class="fas fa-info-circle"></i> Detalles</a></td>
+                            <td><a class="btn btn-warning btn-sm" th:href="@{/editar-producto/} + ${producto.id}"><i class="fas fa-edit"></i> Editar</a></td>
+                            <td><a class="btn btn-danger btn-sm" th:href="@{/eliminar-producto/} + ${producto.id}" onclick="return confirm('¿Estás seguro de eliminar el producto?');"><i class="fas fa-trash-alt"></i> Eliminar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav th:replace="paginator-nav :: paginator"></nav>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>
