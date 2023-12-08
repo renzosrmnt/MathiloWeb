@@ -1,43 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head">
-<meta charset="utf-8">
-</head>
+
+<head th:replace="~{layout/layout :: head}">
+	<title>Categorías | Mathilo </title>
+
 <body>
 
-	<header th:replace="layout/layout :: header"></header>
-	
-	<div class="container py-4">
-	   <div class="card bg-light">
-	       <div class="card-header" th:text="${titulo}">
-	       </div>
-	       <div class="card-body">
+	<header th:replace="~{layout/layout :: header}"></header>
 
-	           <div class="row">
-            <div class="col-md-6">
-                <ul class="list-group">
-                 <li class="list-group-item active" th:text="${producto.nombre}"></li>
-	             <li class="list-group-item" th:text="${producto.descripcion}"></li>
-	             <li class="list-group-item">Precio: S/. <span th:text="${producto.precio}"></span></li>
-	             <li class="list-group-item">Stock: <span th:text="${producto.stock}"></span> un.</li>
-	             <li class="list-group-item">Peso: <span th:text="${producto.peso}"></span> kg.</li> 
-	             <li class="list-group-item">Altura: <span th:text="${producto.altura}"></span> m.</li>
-	             <li class="list-group-item">Ancho: <span th:text="${producto.ancho}"></span> m.</li>
-	             <li class="list-group-item">Largo: <span th:text="${producto.largo}"></span> m.</li>
-	             <li class="list-group-item">Material: <span th:text="${producto.material}"></span></li>
-	             <li class="list-group-item">Color: <span th:text="${producto.color}"></span></li>
-	             <li class="list-group-item">Categoria: <span th:text="${producto.categoria.nombre}"></span></li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <!-- Columna para la imagen -->
-                <img th:src="@{${producto.image}}" alt="Imagen del producto" class="img-fluid">
-            </div>
-        </div>
-	       </div>
-	   </div>
-	</div>
-	
-	<footer th:replace="layout/layout :: footer"></footer>
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="~{layout/layout :: sidebar}"></div>
+
+		<div class="main-panel">
+
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title" th:text="${titulo}"></h4>
+
+								<div class="row">
+									<div class="col-md-6">
+										<ul class="list-group">
+											<li class="list-group-item active" th:text="${producto.nombre}"></li>
+											<li class="list-group-item" th:text="${producto.descripcion}"></li>
+											<li class="list-group-item">Precio: S/. <span
+													th:text="${producto.precio}"></span></li>
+											<li class="list-group-item">Stock: <span th:text="${producto.stock}"></span>
+												un.</li>
+											<li class="list-group-item">Peso: <span th:text="${producto.peso}"></span>
+												kg.</li>
+											<li class="list-group-item">Altura: <span
+													th:text="${producto.altura}"></span> m.</li>
+											<li class="list-group-item">Ancho: <span th:text="${producto.ancho}"></span>
+												m.</li>
+											<li class="list-group-item">Largo: <span th:text="${producto.largo}"></span>
+												m.</li>
+											<li class="list-group-item">Material: <span
+													th:text="${producto.material}"></span></li>
+											<li class="list-group-item">Color: <span th:text="${producto.color}"></span>
+											</li>
+											<li class="list-group-item">Categoria: <span
+													th:text="${producto.categoria.nombre}"></span>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-6">
+										<!-- Columna para la imagen -->
+										<img th:src="@{${producto.image}}" alt="Imagen del producto" class="img-fluid">
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- content-wrapper -->
+
+				<!-- partial -->
+				<!-- partial:partials/_footer.html -->
+				<div th:replace="~{layout/layout :: footer}"></div>
+
+			</div>
+
+		</div>
+
+		<div th:replace="~{layout/layout :: scripts}"></div>
 </body>
+
 </html>

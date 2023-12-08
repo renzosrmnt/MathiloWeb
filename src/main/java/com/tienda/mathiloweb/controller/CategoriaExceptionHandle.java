@@ -12,7 +12,7 @@ public class CategoriaExceptionHandle {
 	@ExceptionHandler(DataIntegrityViolationException.class)
     public String handleDataIntegrityViolation(DataIntegrityViolationException ex, RedirectAttributes redirectAttributes) {
         if (ex.getCause() instanceof ConstraintViolationException) {
-            redirectAttributes.addFlashAttribute("error", "El valor ingresado ya existe, por favor elige otro.");
+            redirectAttributes.addFlashAttribute("error", "Completa este campo");
         }
         return "redirect:/categorias";
     }

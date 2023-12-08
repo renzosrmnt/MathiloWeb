@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.tienda.mathiloweb.entity.VentaCategoria;
-import com.tienda.mathiloweb.service.VentaCategoriaService;
+import com.tienda.mathiloweb.entity.Categoria;
+import com.tienda.mathiloweb.service.CategoriaService;
 import com.tienda.mathiloweb.util.pagination.PageRender;
 
 import jakarta.validation.Valid;
@@ -25,11 +25,11 @@ import jakarta.validation.Valid;
 @Controller
 public class CategoriaController {
 	@Autowired
-	private VentaCategoriaService categoriaService;
+	private CategoriaService categoriaService;
 	
 	@GetMapping("/categoria/{id}")
 	public String verDetallesCategoria(@PathVariable(value = "id") Long id,Map<String,Object> modelo,RedirectAttributes flash) {
-		VentaCategoria categoria = categoriaService.findById(id);
+		Categoria categoria = categoriaService.findById(id);
 		if(categoria == null) {
 			flash.addFlashAttribute("error", "La categoría no existe en la base de datos");
 			return "redirect:/categorias";
@@ -40,11 +40,11 @@ public class CategoriaController {
 		return "detallesCategoria";
 	}
 	
-	@GetMapping("/categorias")
+	@GetMapping("/categoria")
 	public String listarCategorias(@RequestParam(name = "page",defaultValue = "0") int page,Model modelo) {
 		Pageable pageRequest = PageRequest.of(page, 5);
-		Page<VentaCategoria> categorias = categoriaService.findAll(pageRequest);
-		PageRender<VentaCategoria> pageRender = new PageRender<>("/categorias", categorias);
+		Page<Categoria> categorias = categoriaService.findAll(pageRequest);
+		PageRender<Categoria> pageRender = new PageRender<>("/categoria", categorias);
 		
 		modelo.addAttribute("titulo","Listado de categorias");
 		modelo.addAttribute("categorias",categorias);
@@ -53,16 +53,15 @@ public class CategoriaController {
 		return "listarCategorias";
 	}
 	
-	@GetMapping("/nueva-categoria")
+	@GetMapping("/categoria/nueva-categoria")
 	public String mostrarFormularioCategoria(Model modelo) {
-	    modelo.addAttribute("categoria", new VentaCategoria());
+	    modelo.addAttribute("categoria", new Categoria());
 	    modelo.addAttribute("titulo", "Registro de categoría");
 	    return "formularioCategoria";
 	}
 
-
-	@PostMapping("/registro-categoria")
-	public String guardarCategoria(@Valid VentaCategoria categoria, BindingResult result, Model modelo, RedirectAttributes flash, SessionStatus status) {
+	@PostMapping("/categoria/guardar-categoria")
+	public String guardarCategoria(@Valid Categoria categoria, BindingResult result, Model modelo, RedirectAttributes flash, SessionStatus status) {
 	    if (result.hasErrors()) {
 	        modelo.addAttribute("titulo", "Registro de categoría");
 	        return "formularioCategoria";
@@ -72,38 +71,38 @@ public class CategoriaController {
 	        categoriaService.save(categoria);
 	        status.setComplete();
 	        flash.addFlashAttribute("success", "¡Categoría registrada con éxito!");
-	        return "redirect:/categorias";
+	        return "redirect:/categoria";
 	    } catch (DataIntegrityViolationException e) {
 	        flash.addFlashAttribute("error", "El nombre de la categoría ya existe");
-	        return "redirect:/nueva-categoria";
+	        return "redirect:/categoria/nueva-categoria";
 	    }
 	}
 
-    @GetMapping("/editar-categoria/{id}")
+    @GetMapping("/categoria/editar-categoria/{id}")
     public String editarCategoria(@PathVariable(value = "id") Long id, Model modelo, RedirectAttributes flash) {
         if (id != null && id > 0) {
-            VentaCategoria categoria = categoriaService.findById(id);
+            Categoria categoria = categoriaService.findById(id);
             if (categoria == null) {
                 flash.addFlashAttribute("error", "La categoría no existe en la base de datos");
-                return "redirect:/categorias";
+                return "redirect:/categoria";
             }
             modelo.addAttribute("categoria", categoria);
         } else {
             flash.addFlashAttribute("error", "El ID de la categoría no puede ser nulo o cero");
-            return "redirect:/categorias";
+            return "redirect:/categoria";
         }
 
         modelo.addAttribute("titulo", "Edición de categoría");
         return "formularioCategoria";
     }
 	
-	@GetMapping("/eliminar-categoria/{id}")
+	@GetMapping("/categoria/eliminar-categoria/{id}")
 	public String eliminarCategoria(@PathVariable(value = "id") Long id,RedirectAttributes flash) {
 		if(id > 0) {
 			categoriaService.delete(id);
 			flash.addFlashAttribute("success", "Categoria eliminada con exito");
 		}
-		return "redirect:/categorias";
+		return "redirect:/categoria";
 	}
 	
 }

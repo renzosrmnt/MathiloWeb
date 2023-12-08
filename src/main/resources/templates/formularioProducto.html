@@ -1,130 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layout/layout :: head">
-	<meta charset="utf-8">
-</head>
+<head th:replace="~{layout/layout :: head}">
+	<title>Categorías | Mathilo </title>
 
 <body>
 
-	<header th:replace="layout/layout :: header"></header>
+	<header th:replace="~{layout/layout :: header}"></header>
 
-	<br>
+	<div class="container-fluid page-body-wrapper">
 
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-6 col-md-8 col-sm-10">
-				<div class="card">
-					<h2 class="card-header text-center fs-4" th:text="${titulo}"></h2>
-					<div class="card-body">
-						<form th:action="@{/registro-producto}" th:object="${producto}"  enctype="multipart/form-data" method="post">
-							<input type="hidden" th:if="${producto != null}" th:field="*{id}"
-								th:value="${producto.id}" />
 
-							<div class="mb-3">
-								<label for="nombre" class="form-label">Nombre :</label>
-								<input type="text" id="nombre" th:field="*{nombre}" class="form-control"
-									th:errorclass="'is-invalid'" required />
-								<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
-									th:errors="*{nombre}"></small>
-							</div>
-							<div class="mb-3">
-								<label for="descripcion" class="form-label">Descripción :</label>
-								<textarea id="descripcion" th:field="*{descripcion}" class="form-control"
-									th:errorclass="'is-invalid'" rows="2"></textarea>
-								<small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}"
-									th:errors="*{descripcion}"></small>
-							</div>
-							<div class="row mb-3">
-								<div class="col">
-									<label for="precio" class="form-label">Precio :</label>
-									<input type="number" step="any" id="precio" th:field="*{precio}" class="form-control"
-										th:errorclass="'is-invalid'" required />
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('precio')}"
-										th:errors="*{precio}"></small>
-								</div>
-								<div class="col">
-									<label for="stock" class="form-label">Stock :</label>
-									<input type="number" id="stock" th:field="*{stock}" class="form-control"
-										th:errorclass="'is-invalid'" required />
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('stock')}"
-										th:errors="*{stock}"></small>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<div class="col">
-									<label for="peso" class="form-label">Peso :</label>
-									<input type="number" step="any" id="peso" th:field="*{peso}" class="form-control"
-										th:errorclass="'is-invalid'" />
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('peso')}"
-										th:errors="*{peso}"></small>
-								</div>
-								<div class="col">
-									<label for="altura" class="form-label">Altura :</label>
-									<input type="number" step="any" id="altura" th:field="*{altura}" class="form-control"
-										th:errorclass="'is-invalid'" />
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('altura')}"
-										th:errors="*{altura}"></small>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<div class="col">
-									<label for="ancho" class="form-label">Ancho :</label>
-									<input type="number" step="any" id="ancho" th:field="*{ancho}" class="form-control"
-										th:errorclass="'is-invalid'" />
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('ancho')}"
-										th:errors="*{ancho}"></small>
-								</div>
-								<div class="col">
-									<label for="largo" class="form-label">Largo :</label>
-									<input type="number" step="any" id="largo" th:field="*{largo}" class="form-control"
-										th:errorclass="'is-invalid'" />
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('largo')}"
-										th:errors="*{largo}"></small>
-								</div>
-							</div>
-							<div class="mb-3">
-								<label for="material" class="form-label">Material :</label>
-								<input type="text" id="material" th:field="*{material}" class="form-control"
-									th:errorclass="'is-invalid'" />
-								<small class="form-text text-danger" th:if="${#fields.hasErrors('material')}"
-									th:errors="*{material}"></small>
-							</div>
-							<div class="mb-3">
-								<label for="color" class="form-label">Color :</label>
-								<input type="text" id="color" th:field="*{color}" class="form-control"
-									th:errorclass="'is-invalid'" />
-								<small class="form-text text-danger" th:if="${#fields.hasErrors('color')}"
-									th:errors="*{color}"></small>
-							</div>
+		<div th:replace="~{layout/layout :: sidebar}"></div>
 
-							<div class="mb-3">
-								<label for="imagen" class="form-label">Imagen :</label>
-								<input type="file" id="imagen" name="file" class="form-control" accept="image/*" />
+		<div class="main-panel">
 
-							</div>
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title" th:text="${titulo}"></h4>
+								<form th:action="@{/guardar-producto}" th:object="${producto}"
+									enctype="multipart/form-data" method="post">
+									<input type="hidden" th:if="${producto != null}" th:field="*{id}"
+										th:value="${producto.id}" />
 
-							<div class="mb-3">
-								<label for="categoria" class="form-label">Categoría :</label>
-								<select id="categoria" name="categoria" class="form-control">
-									<option th:each="categoria : ${categorias}" th:value="${categoria.id}"
-										th:text="${categoria.nombre}"></option>
-								</select>
-							</div>
+									<div class="form-group">
+										<label for="nombre">Nombre</label>
+										<input type="text" id="nombre" th:field="*{nombre}" class="form-control"
+											th:errorclass="is-invalid" placeholder="Nombre" required />
+										<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
+											th:errors="*{nombre}"></small>
+									</div>
 
-							<div class="text-center">
-								<button type="submit" class="btn btn-primary btn-sm">
-									<i class="fas fa-save me-2"></i> Guardar
-								</button>
+									<div class="form-group">
+										<label for="descripcion">Descripción</label>
+										<input id="descripcion" th:field="*{descripcion}" class="form-control"
+											th:errorclass="is-invalid" placeholder="Descripción" />
+										<small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}"
+											th:errors="*{descripcion}"></small>
+									</div>
+
+									<div class="row mb-3">
+										<div class="form-group col">
+											<label for="precio">Precio</label>
+											<input type="number" step="any" id="precio" th:field="*{precio}"
+												class="form-control" th:errorclass="is-invalid" required />
+											<small class="form-text text-danger" th:if="${#fields.hasErrors('precio')}"
+												th:errors="*{precio}"></small>
+										</div>
+										<div class="form-group col">
+											<label for="stock">Stock</label>
+											<input type="number" id="stock" th:field="*{stock}" class="form-control"
+												th:errorclass="'form-control alert-danger'" required />
+											<small class="form-text text-danger" th:if="${#fields.hasErrors('stock')}"
+												th:errors="*{stock}"></small>
+										</div>
+									</div>
+									<div class="row mb-3">
+										<div class="form-group col">
+											<label for="peso">Peso</label>
+											<input type="number" step="any" id="peso" th:field="*{peso}"
+												class="form-control" th:errorclass="'is-invalid'" />
+											<small class="form-text text-danger" th:if="${#fields.hasErrors('peso')}"
+												th:errors="*{peso}"></small>
+										</div>
+										<div class="form-group col">
+											<label for="altura">Altura</label>
+											<input type="number" step="any" id="altura" th:field="*{altura}"
+												class="form-control" th:errorclass="'is-invalid'" />
+											<small class="form-text text-danger" th:if="${#fields.hasErrors('altura')}"
+												th:errors="*{altura}"></small>
+										</div>
+									</div>
+									<div class="row mb-3">
+										<div class="form-group col">
+											<label for="ancho">Ancho</label>
+											<input type="number" step="any" id="ancho" th:field="*{ancho}"
+												class="form-control" th:errorclass="'is-invalid'" />
+											<small class="form-text text-danger" th:if="${#fields.hasErrors('ancho')}"
+												th:errors="*{ancho}"></small>
+										</div>
+										<div class="form-group col">
+											<label for="largo">Largo</label>
+											<input type="number" step="any" id="largo" th:field="*{largo}"
+												class="form-control" th:errorclass="'is-invalid'" />
+											<small class="form-text text-danger" th:if="${#fields.hasErrors('largo')}"
+												th:errors="*{largo}"></small>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="material">Material</label>
+										<input type="text" id="material" th:field="*{material}" class="form-control"
+											th:errorclass="'is-invalid'" placeholder="Material" />
+										<small class="form-text text-danger" th:if="${#fields.hasErrors('material')}"
+											th:errors="*{material}"></small>
+									</div>
+									<div class="form-group">
+										<label for="color">Color</label>
+										<input type="text" id="color" th:field="*{color}" class="form-control"
+											th:errorclass="'is-invalid'" placeholder="Color" />
+										<small class="form-text text-danger" th:if="${#fields.hasErrors('color')}"
+											th:errors="*{color}"></small>
+									</div>
+
+									<div class="form-group">
+										<label for="imagen">Imagen</label>
+										<input type="file" id="imagen" name="file" class="form-control"
+											accept="image/*" />
+									</div>
+
+									<div class="form-group">
+										<label for="categoria">Categoría</label>
+										<select id="categoria" name="categoria" class="form-control">
+											<option th:each="categoria : ${categorias}" th:value="${categoria.id}"
+												th:text="${categoria.nombre}"></option>
+										</select>
+									</div>
+
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary me-2">
+											<i class="fas fa-save me-2"></i> Guardar
+										</button>
+									</div>
+
+								</form>
 							</div>
-						</form>
+						</div>
 					</div>
+
 				</div>
 			</div>
+			<!-- content-wrapper ends -->
+
+			<!-- partial -->
+			<!-- partial:partials/_footer.html -->
+			<div th:replace="~{layout/layout :: footer}"></div>
+
 		</div>
+
 	</div>
 
-	<footer th:replace="layout/layout :: footer"></footer>
+	<div th:replace="~{layout/layout :: scripts}"></div>
 </body>
 
 </html>
